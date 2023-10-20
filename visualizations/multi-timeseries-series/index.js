@@ -92,7 +92,6 @@ function AlignedTimeseries(props) {
         const conf_todaystarttime = !grp_window ? null :grp_window.conf_todaystarttime  == undefined ? null :grp_window.conf_todaystarttime;
         const conf_todayendtime = !grp_window ? null :grp_window.conf_todayendtime == undefined ? null : grp_window.conf_todayendtime;
         const conf_todaystartday = !grp_window ? null :grp_window.conf_todaystartday  == undefined ? null :grp_window.conf_todaystartday;
-        const conf_todayendday = !grp_window ? null :grp_window.conf_todayendday == undefined ? null : grp_window.conf_todayendday;
 
         //grp_history
         const conf_compare = !grp_history ? null : grp_history.conf_compare == undefined ? null : grp_history.conf_compare;
