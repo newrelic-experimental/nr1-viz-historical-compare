@@ -1,0 +1,37 @@
+{
+    "private": true,
+    "name": "multi-timeseries-series",
+    "version": "0.0.105",
+    "scripts": {
+        "start": "nr1 nerdpack:serve",
+        "test": "exit 0"
+    },
+    "nr1": {
+        "uuid": "5b1dc7dc-8c51-4df3-b7b2-6d024075524d"
+    },
+    "dependencies": {
+        "chroma-js": "^2.4.2",
+        "eslint": "^8.50.0",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "json2csv": "^6.0.0-alpha.2",
+        "lodash": "^4.17.21",
+        "moment": "^2.29.4",
+        "moment-timezone": "^0.5.43",
+        "percentile": "^1.6.0",
+        "prop-types": "^15.7.2",
+        "react": "17.0.2",
+        "react-chartjs-2": "^5.2.0",
+        "react-csv": "^2.2.2",
+        "react-dom": "17.0.2",
+        "recharts": "^2.8.0",
+        "uuid": "^9.0.1",
+        "victory": "^36.6.11"
+    },
+    "browserslist": [
+        "last 2 versions",
+        "not ie < 11",
+        "not dead"
+    ]
+}

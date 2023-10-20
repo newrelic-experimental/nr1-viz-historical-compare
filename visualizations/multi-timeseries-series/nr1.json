@@ -1,0 +1,453 @@
+{
+    "schemaType": "VISUALIZATION",
+    "id": "multi-timeseries-series",
+    "displayName": "Historical Period Compare",
+    "description": "Displays timeseries data from different periods on the same chart",
+    "configuration": [
+        
+        {
+            "name": "conf_toggleReload",
+            "title": "Toggle Reload",
+            "type": "boolean"
+        },
+
+        {
+            "name": "grp_data",
+            "title": "Data source",
+            "type": "namespace",
+            "items": [
+                {
+                    "name": "conf_accountId",
+                    "title": "Account ID",
+                    "description": "Account ID to be associated with the query",
+                    "type": "account-id"
+                },
+                {
+                    "name": "conf_query",
+                    "title": "Query",
+                    "description": "NRQL query for visualization",
+                    "type": "nrql"
+                },
+                {
+                    "name": "conf_timeseries",
+                    "title": "Timeseries bucket size",
+                    "description": "minutes/days/hours/weeks/years",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_timezone",
+                    "title": "Timezone",
+                    "description": "Timezone to use for querying",
+                    "type": "enum",
+                    "items": [
+                        { "title": "UTC", "value": "UTC" },
+                        { "title": "Africa/Abidjan", "value": "Africa/Abidjan" },
+                        { "title": "Africa/Addis_Ababa", "value": "Africa/Addis_Ababa" },
+                        { "title": "Africa/Algiers", "value": "Africa/Algiers" },
+                        { "title": "Africa/Blantyre", "value": "Africa/Blantyre" },
+                        { "title": "Africa/Cairo", "value": "Africa/Cairo" },
+                        { "title": "Africa/Windhoek", "value": "Africa/Windhoek" },
+                        { "title": "America/Adak", "value": "America/Adak" },
+                        { "title": "America/Anchorage", "value": "America/Anchorage" },
+                        { "title": "America/Araguaina", "value": "America/Araguaina" },
+                        { "title": "America/Argentina/Buenos_Aires", "value": "America/Argentina/Buenos_Aires" },
+                        { "title": "America/Belize", "value": "America/Belize" },
+                        { "title": "America/Bogota", "value": "America/Bogota" },
+                        { "title": "America/Campo_Grande", "value": "America/Campo_Grande" },
+                        { "title": "America/Cancun", "value": "America/Cancun" },
+                        { "title": "America/Caracas", "value": "America/Caracas" },
+                        { "title": "America/Chicago", "value": "America/Chicago" },
+                        { "title": "America/Chihuahua", "value": "America/Chihuahua" },
+                        { "title": "America/Dawson_Creek", "value": "America/Dawson_Creek" },
+                        { "title": "America/Denver", "value": "America/Denver" },
+                        { "title": "America/Ensenada", "value": "America/Ensenada" },
+                        { "title": "America/Glace_Bay", "value": "America/Glace_Bay" },
+                        { "title": "America/Godthab", "value": "America/Godthab" },
+                        { "title": "America/Goose_Bay", "value": "America/Goose_Bay" },
+                        { "title": "America/Havana", "value": "America/Havana" },
+                        { "title": "America/La_Paz", "value": "America/La_Paz" },
+                        { "title": "America/Los_Angeles", "value": "America/Los_Angeles" },
+                        { "title": "America/Miquelon", "value": "America/Miquelon" },
+                        { "title": "America/Montevideo", "value": "America/Montevideo" },
+                        { "title": "America/New_York", "value": "America/New_York" },
+                        { "title": "America/Noronha", "value": "America/Noronha" },
+                        { "title": "America/Santiago", "value": "America/Santiago" },
+                        { "title": "America/Sao_Paulo", "value": "America/Sao_Paulo" },
+                        { "title": "America/St_Johns", "value": "America/St_Johns" },
+                        { "title": "Asia/Anadyr", "value": "Asia/Anadyr" },
+                        { "title": "Asia/Bangkok", "value": "Asia/Bangkok" },
+                        { "title": "Asia/Beirut", "value": "Asia/Beirut" },
+                        { "title": "Asia/Damascus", "value": "Asia/Damascus" },
+                        { "title": "Asia/Dhaka", "value": "Asia/Dhaka" },
+                        { "title": "Asia/Dubai", "value": "Asia/Dubai" },
+                        { "title": "Asia/Gaza", "value": "Asia/Gaza" },
+                        { "title": "Asia/Hong_Kong", "value": "Asia/Hong_Kong" },
+                        { "title": "Asia/Irkutsk", "value": "Asia/Irkutsk" },
+                        { "title": "Asia/Jerusalem", "value": "Asia/Jerusalem" },
+                        { "title": "Asia/Kabul", "value": "Asia/Kabul" },
+                        { "title": "Asia/Katmandu", "value": "Asia/Katmandu" },
+                        { "title": "Asia/Kolkata", "value": "Asia/Kolkata" },
+                        { "title": "Asia/Krasnoyarsk", "value": "Asia/Krasnoyarsk" },
+                        { "title": "Asia/Magadan", "value": "Asia/Magadan" },
+                        { "title": "Asia/Novosibirsk", "value": "Asia/Novosibirsk" },
+                        { "title": "Asia/Rangoon", "value": "Asia/Rangoon" },
+                        { "title": "Asia/Seoul", "value": "Asia/Seoul" },
+                        { "title": "Asia/Tashkent", "value": "Asia/Tashkent" },
+                        { "title": "Asia/Tehran", "value": "Asia/Tehran" },
+                        { "title": "Asia/Tokyo", "value": "Asia/Tokyo" },
+                        { "title": "Asia/Vladivostok", "value": "Asia/Vladivostok" },
+                        { "title": "Asia/Yakutsk", "value": "Asia/Yakutsk" },
+                        { "title": "Asia/Yekaterinburg", "value": "Asia/Yekaterinburg" },
+                        { "title": "Asia/Yerevan", "value": "Asia/Yerevan" },
+                        { "title": "Atlantic/Azores", "value": "Atlantic/Azores" },
+                        { "title": "Atlantic/Cape_Verde", "value": "Atlantic/Cape_Verde" },
+                        { "title": "Atlantic/Stanley", "value": "Atlantic/Stanley" },
+                        { "title": "Australia/Adelaide", "value": "Australia/Adelaide" },
+                        { "title": "Australia/Brisbane", "value": "Australia/Brisbane" },
+                        { "title": "Australia/Darwin", "value": "Australia/Darwin" },
+                        { "title": "Australia/Eucla", "value": "Australia/Eucla" },
+                        { "title": "Australia/Hobart", "value": "Australia/Hobart" },
+                        { "title": "Australia/Lord_Howe", "value": "Australia/Lord_Howe" },
+                        { "title": "Australia/Perth", "value": "Australia/Perth" },
+                        { "title": "Chile/EasterIsland", "value": "Chile/EasterIsland" },
+                        { "title": "Etc/GMT+10", "value": "Etc/GMT+10" },
+                        { "title": "Etc/GMT+8", "value": "Etc/GMT+8" },
+                        { "title": "Etc/GMT-11", "value": "Etc/GMT-11" },
+                        { "title": "Etc/GMT-12", "value": "Etc/GMT-12" },
+                        { "title": "Europe/Amsterdam", "value": "Europe/Amsterdam" },
+                        { "title": "Europe/Belfast", "value": "Europe/Belfast" },
+                        { "title": "Europe/Belgrade", "value": "Europe/Belgrade" },
+                        { "title": "Europe/Brussels", "value": "Europe/Brussels" },
+                        { "title": "Europe/Dublin", "value": "Europe/Dublin" },
+                        { "title": "Europe/Lisbon", "value": "Europe/Lisbon" },
+                        { "title": "Europe/London", "value": "Europe/London" },
+                        { "title": "Europe/Minsk", "value": "Europe/Minsk" },
+                        { "title": "Europe/Moscow", "value": "Europe/Moscow" },
+                        { "title": "Pacific/Auckland", "value": "Pacific/Auckland" },
+                        { "title": "Pacific/Chatham", "value": "Pacific/Chatham" },
+                        { "title": "Pacific/Gambier", "value": "Pacific/Gambier" },
+                        { "title": "Pacific/Kiritimati", "value": "Pacific/Kiritimati" },
+                        { "title": "Pacific/Marquesas", "value": "Pacific/Marquesas" },
+                        { "title": "Pacific/Midway", "value": "Pacific/Midway" },
+                        { "title": "Pacific/Norfolk", "value": "Pacific/Norfolk" },
+                        { "title": "Pacific/Tongatapu", "value": "Pacific/Tongatapu" }
+                    ]
+                },
+                {
+                    "name": "conf_clockchangebol",
+                    "title": "Re-align clock changes",
+                    "description": "Re-aligns the data to attempt to deal with clock changes. Only valid if the compare step size is multiple of a full day.",
+                    "type": "boolean"
+                }
+            ]
+        },
+        {
+            "name": "grp_window",
+            "title": "Time window",
+            "type": "namespace",
+            "items": [
+                {
+                    "name": "conf_overridepicker",
+                    "title": "Override time picker",
+                    "description": "Override time picker.",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_startunixtime",
+                    "title": "Start (unixtime seconds)",
+                    "description": "Latest period start time",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_endunixtime",
+                    "title": "End (unixtime seconds)",
+                    "description": "Latest period end time",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_startfromnow",
+                    "title": "Start offset from now (period)",
+                    "description": "Window start, offset from now. 'T1H', 'T45M",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_endfromnow",
+                    "title": "End offset from now (period)",
+                    "description": "Window end, offset from now. e.g. 'T1H', 'T45M'",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_todaystarttime",
+                    "title": "Start today time (hhmm)",
+                    "description": "Window start time, today",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_todayendtime",
+                    "title": "End today time (hhmm)",
+                    "description": "Window end time, today",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_duration",
+                    "title": "Duration (period)",
+                    "description": "Duration of window, e.g. 'T30M', 'T1H','T2H30M', '7D', '3DT12H",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "grp_history",
+            "title": "Historical lookback",
+            "type": "namespace",
+            "items": [        
+                {
+                    "name": "conf_compare",
+                    "title": "Compare periods",
+                    "description": "Number of historical windows to compare",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_comparestepsize",
+                    "title": "Compare step size (period)",
+                    "description": "The gap between each historical window (e.g. '1D', '12H', 'T45M', '3DT6H30M')",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "grp_layers",
+            "title": "Layer options",
+            "type": "namespace",
+            "items": [
+                {
+                    "name": "conf_hideoriginaldata",
+                    "title": "Hide historical",
+                    "description": "Hide historical series from chart",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_average",
+                    "title": "Average",
+                    "description": "Display an average line",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_minmaxareabol",
+                    "title": "Min Max Area",
+                    "description": "Min Max Area",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_trimmedareabol",
+                    "title": "Trimmed Area",
+                    "description": "Trimmed Area",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_trimpercent",
+                    "title": "Trim Percentage",
+                    "description": "Percentage to trim from min and max values, defaults to 10%",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_clippedareabol",
+                    "title": "Clipped Area",
+                    "description": "Clipped Area",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_clipsize",
+                    "title": "Clip size",
+                    "description": "Number of points to clip from data set, defaults to 1",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "conf_referenceareas",
+            "title": "Reference Areas",
+            "type": "collection",
+            "items": [
+                {
+                    "name": "conf_refName",
+                    "title": "Name",
+                    "description": "The name of the reference area",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_refType",
+                    "title": "Type",
+                    "description": "Area or line",
+                    "type": "enum",
+                    "items": [
+                        {
+                            "title": "Area",
+                            "value": "area"
+                        },
+                        {
+                            "title": "Line",
+                            "value": "line"
+                        }
+                    ]
+                },
+                {
+                    "name": "conf_refY1",
+                    "title": "Lower Y value (blank for min)",
+                    "description": "The lower Y value to render areas or lines",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_refY2",
+                    "title": "Upper Y value (blank for max, not used for lines)",
+                    "description": "The upper Y value to areas",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_refColor",
+                    "title": "Color (css)",
+                    "description": "The color of the area, in CSS. Opacity is supported. e.g. 'red', '#FC65D688'",
+                    "type": "string"
+                }
+            ]
+        }
+        ,
+        {
+            "name": "grp_display",
+            "title": "Display options",
+            "type": "namespace",
+            "items": [
+                {
+                    "name": "conf_refreshrate",
+                    "title": "Refresh rate (s)",
+                    "description": "Leave blank to auto refresh, set to zero to disable refresh, otherwise set number of seconds to wait before refresh.",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_datetimestringformat_xaxis",
+                    "title": "Datetime string format for x axis and CSV",
+                    "description": "Datetime string format for x axis and CSV",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_datetimestringformat_tooltip",
+                    "title": "Datetime string format for tooltip",
+                    "description": "Datetime string format for tooltip",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_valuerounding",
+                    "title": "Decimal point rounding",
+                    "description": "Numberof decimial poitns to round values to",
+                    "type": "number"
+                },
+                {
+                    "name": "conf_showdots",
+                    "title": "Show dots",
+                    "description": "Show dots on line chart",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_yaxislabel",
+                    "title": "Y Axis Label",
+                    "description": "Y Axis label",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_yaxismax",
+                    "title": "Y axis max",
+                    "description": "Y Axis max value",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_yaxismin",
+                    "title": "Y axis min",
+                    "description": "Y Axis min value",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_gridbol",
+                    "title": "Display grid",
+                    "description": "Display a grid",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_csvbol",
+                    "title": "Display CSV download button",
+                    "description": "Display CSV download button",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_colortheme",
+                    "title": "Color theme",
+                    "description": "Colour theme to use",
+                    "type": "enum",
+                    "items": [
+                        {
+                          "title": "Pale",
+                          "value": "pale"
+                        },
+                        {
+                            "title": "Strong",
+                            "value": "strong"
+                        },
+                        {
+                            "title": "Grey fade",
+                            "value": "greyfade"
+                        },
+                        {
+                            "title": "Blue fade",
+                            "value": "bluefade"
+                        },
+                        {
+                            "title": "Retro metro",
+                            "value": "retrometro"
+                        },
+                        {
+                            "title": "Dutch field",
+                            "value": "dutchfield"
+                        },
+                        {
+                            "title": "Pink black",
+                            "value": "pinkblack"
+                        },
+                        {
+                            "title": "Brewer YlGnBu",
+                            "value": "brewer-YlGnBu"
+                        },
+                        {
+                            "title": "Brewer RdPu",
+                            "value": "brewer-RdPu"
+                        }
+                        
+                    ]
+                },
+                {
+                    "name": "conf_alignment",
+                    "title": "Alignment",
+                    "description": "How the timeseries should be aligned",
+                    "type": "enum",
+                    "items": [
+                        {
+                            "title": "Start: Align by timeseries start points",
+                            "value": "start"
+                        },
+                        {
+                            "title": "Middle: Align by timeseries mid points ",
+                            "value": "middle"
+                        },
+                        {
+                            "title": "End: Align by timeseries end points",
+                            "value": "end"
+                        }
+                    ]
+                }
+            ]
+        }
+       
+
+
+        
+        
+    ]
+}
