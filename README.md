@@ -11,7 +11,7 @@
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/nr-custom-attr-data-aggregator)
 ![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/nr-custom-attr-data-aggregator)
 
-# Historical Multi-series Comparison [build badges go here when available]
+# Historical Multi-series Comparison
 
 This custom visualisation solves multiple different use cases. Its primary use case is to allow a timeseries query to be displayed alongside the same query from historical periods. A bit like `compare with` but supporting more than one comparison period. 
 
