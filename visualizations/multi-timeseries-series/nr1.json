@@ -189,6 +189,22 @@
                     "type": "string"
                 },
                 {
+                    "name": "conf_todaystartday",
+                    "title": "Week from",
+                    "description": "One week window starting on date",
+                    "type": "enum",
+                    "items": [
+                        { "title": "Not set", "value": "" },
+                        { "title": "Monday", "value": 1 },
+                        { "title": "Tuesday", "value": 2 },
+                        { "title": "Wednesday", "value": 3 },
+                        { "title": "Thursday", "value": 4 },
+                        { "title": "Friday", "value": 5 },
+                        { "title": "Saturday", "value": 6 },
+                        { "title": "Sunday", "value": 7 }
+                    ]
+                },
+                {
                     "name": "conf_duration",
                     "title": "Duration (period)",
                     "description": "Duration of window, e.g. 'T30M', 'T1H','T2H30M', '7D', '3DT12H",
@@ -444,10 +460,5 @@
                 }
             ]
         }
-       
-
-
-        
-        
     ]
 }

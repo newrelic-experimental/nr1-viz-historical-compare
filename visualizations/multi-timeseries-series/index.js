@@ -91,6 +91,8 @@ function AlignedTimeseries(props) {
         const conf_endfromnow = !grp_window ? null :grp_window.conf_endfromnow  == undefined ? null :grp_window.conf_endfromnow;
         const conf_todaystarttime = !grp_window ? null :grp_window.conf_todaystarttime  == undefined ? null :grp_window.conf_todaystarttime;
         const conf_todayendtime = !grp_window ? null :grp_window.conf_todayendtime == undefined ? null : grp_window.conf_todayendtime;
+        const conf_todaystartday = !grp_window ? null :grp_window.conf_todaystartday  == undefined ? null :grp_window.conf_todaystartday;
+        const conf_todayendday = !grp_window ? null :grp_window.conf_todayendday == undefined ? null : grp_window.conf_todayendday;
 
         //grp_history
         const conf_compare = !grp_history ? null : grp_history.conf_compare == undefined ? null : grp_history.conf_compare;
@@ -461,7 +463,7 @@ function AlignedTimeseries(props) {
     }
 
 
-    //Freetext hour
+    //Daily time start/end
     if(conf_todaystarttime!=="" && conf_todaystarttime!==null) {
         startMoment = moment.tz(conf_todaystarttime, "hhmm",conf_timezone);
     }
@@ -469,6 +471,20 @@ function AlignedTimeseries(props) {
         endMoment=moment.tz(conf_todayendtime, "hhmm",conf_timezone);
     }
    
+
+     //weekly day start end
+     if(conf_todaystartday!=="" && conf_todaystartday!==null) {
+        startMoment = moment.tz("0000", "hhmm",conf_timezone);
+        let nowMoment=startMoment.clone(); 
+        endMoment=moment.tz("2400", "hhmm",conf_timezone);
+        let startDay=parseInt(conf_todaystartday)
+        startMoment.day(startDay);
+        endMoment.day(startDay+7);
+        if(startMoment.isAfter(nowMoment)) {
+            startMoment.subtract(7,'days');
+            endMoment.subtract(7,'days');
+        }
+    }
 
 
     //moment version
