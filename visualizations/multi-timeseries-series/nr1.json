@@ -237,9 +237,9 @@
             "type": "namespace",
             "items": [
                 {
-                    "name": "conf_hideoriginaldata",
-                    "title": "Hide historical",
-                    "description": "Hide historical series from chart",
+                    "name": "conf_showoriginaldata",
+                    "title": "Show historical",
+                    "description": "Show historical series from chart",
                     "type": "boolean"
                 },
                 {
@@ -354,7 +354,7 @@
                 {
                     "name": "conf_valuerounding",
                     "title": "Decimal point rounding",
-                    "description": "Numberof decimial poitns to round values to",
+                    "description": "Number of decimal points to round values to",
                     "type": "number"
                 },
                 {
@@ -388,6 +388,12 @@
                     "type": "boolean"
                 },
                 {
+                    "name": "conf_tooltipbol",
+                    "title": "Display tooltip",
+                    "description": "Display tooltip",
+                    "type": "boolean"
+                },
+                {
                     "name": "conf_csvbol",
                     "title": "Display CSV download button",
                     "description": "Display CSV download button",
@@ -396,7 +402,7 @@
                 {
                     "name": "conf_colortheme",
                     "title": "Color theme",
-                    "description": "Colour theme to use",
+                    "description": "Color theme to use",
                     "type": "enum",
                     "items": [
                         {
