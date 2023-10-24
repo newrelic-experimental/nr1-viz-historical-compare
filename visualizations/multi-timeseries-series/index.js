@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext} from 'react';
 import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine,CustomizedTooltip} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
@@ -23,6 +23,7 @@ function avgfunction (array) {
     for (let i = 0; i < array.length; i++) {
         sum += array[i];
     }
+
     return sum / array.length
 }
 
@@ -98,7 +99,7 @@ function AlignedTimeseries(props) {
         const conf_comparestepsize = !grp_history ? null : grp_history.conf_comparestepsize == undefined ? null : grp_history.conf_comparestepsize;
         
         //grp_layers
-        const conf_hideoriginaldata = !grp_layers ? null : grp_layers.conf_hideoriginaldata == undefined ? null : grp_layers.conf_hideoriginaldata;
+        const conf_showoriginaldata = !grp_layers ? null : grp_layers.conf_showoriginaldata == undefined ? null : grp_layers.conf_showoriginaldata;
         const conf_average = !grp_layers ? null : grp_layers.conf_average == undefined ? null : grp_layers.conf_average;
         const conf_minmaxareabol = !grp_layers ? null : grp_layers.conf_minmaxareabol == undefined ? null : grp_layers.conf_minmaxareabol;
         const conf_trimmedareabol = !grp_layers ? null : grp_layers.conf_trimmedareabol == undefined ? null : grp_layers.conf_trimmedareabol;
@@ -274,41 +275,40 @@ function AlignedTimeseries(props) {
         for (let i = 0; i < data[0].data[0].data.length; i++) {  
             let z = data[0].data[0].data[i]
 
-            avgarrctrl.push(build_json(z,i,avgarr,"avg"))
+            avgarrctrl.push(build_json(z,i,avgarr,"HISTORICALmean"))
 
             trimmedareactrl.push(build_json(z,i,trimmedarea,"trimmedarea"))
-            trimmedminctrl.push(build_json(z,i,trimmedmin,"trimmedmin"))
-            trimmedmaxctrl.push(build_json(z,i,trimmedmax,"trimmedmax"))
+            trimmedminctrl.push(build_json(z,i,trimmedmin,"TRIMMEDmin"))
+            trimmedmaxctrl.push(build_json(z,i,trimmedmax,"TRIMMEDmax"))
 
             minmaxareactrl.push(build_json(z,i,minmaxarea,"minmaxarea"))
             minmaxminsctrl.push(build_json(z,i,minmaxmins,"HISTORICALmin"))
             minmaxmaxsctrl.push(build_json(z,i,minmaxmaxs,"HISTORICALmax"))
 
             clippedareactrl.push(build_json(z,i,clippedarea,"clippedarea"))
-            clippedminctrl.push(build_json(z,i,clippedmin,"clippedmin"))
-            clippedmaxctrl.push(build_json(z,i,clippedmax,"clippedmax"))
+            clippedminctrl.push(build_json(z,i,clippedmin,"CLIPPEDmin"))
+            clippedmaxctrl.push(build_json(z,i,clippedmax,"CLIPPEDmax"))
 
         }
     
-
       
         // update queries with calculated data
         if(conf_average === true) { 
-            data.push({"data":[{"data":avgarrctrl, "metadata":{"viz":"main","name": "HISTORICALavg","id":"74B5B05EEA583471E03DCBF0123D81CC79CAE0FE9", "color": getColor("averageLine")}}],loading: false, error: null});
+            data.push({"data":[{"data":avgarrctrl, "metadata":{"viz":"main","name": "HISTORICALmean","id":"74B5B05EEA583471E03DCBF0123D81CC79CAE0FE9", "color": getColor("averageLine")}}],loading: false, error: null});
         }
         if(conf_trimmedareabol === true) {
-            data.push({"data":[{"data":trimmedareactrl, "metadata":{"viz":"main","displayName": "Trimmed max/min","name": "trimmedarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CEE0FE9", "color":getColor("trimmedArea"), "toolTipColor":chroma(getColor("trimmedArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
-            data.push({"data":[{"data":trimmedminctrl, "metadata":{"viz":"main","name": "trimmedmin","id":"02D6A84F7B97E4709A11276615FDAAB3EE2BEE415", "color": getColor(2)}}],loading: false, error: null})
-            data.push({"data":[{"data":trimmedmaxctrl, "metadata":{"viz":"main","name": "trimmedmax","id":"2C1F4F2BAA2800FD80F50C3811F38D03B52DEEEB1", "color":getColor(2)}}],loading: false, error: null})
+            data.push({"data":[{"data":trimmedareactrl, "metadata":{"viz":"main","displayName": "Trimmed min/max","name": "trimmedarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CEE0FE9", "color":getColor("trimmedArea"), "toolTipColor":chroma(getColor("trimmedArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
+            data.push({"data":[{"data":trimmedminctrl, "metadata":{"viz":"main","name": "TRIMMEDmin","id":"02D6A84F7B97E4709A11276615FDAAB3EE2BEE415", "color": getColor(2)}}],loading: false, error: null})
+            data.push({"data":[{"data":trimmedmaxctrl, "metadata":{"viz":"main","name": "TRIMMEDmax","id":"2C1F4F2BAA2800FD80F50C3811F38D03B52DEEEB1", "color":getColor(2)}}],loading: false, error: null})
         }
         if(conf_clippedareabol === true) {
-            data.push({"data":[{"data":clippedareactrl, "metadata":{"viz":"main","displayName": "Clipped max/min","name": "clippedarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0JE8", "color": getColor("clippedArea"), "toolTipColor":chroma(getColor("clippedArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
-            data.push({"data":[{"data":clippedminctrl, "metadata":{"viz":"main","name": "clippedmin","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0LE8", "color": getColor(3)}}],loading: false, error: null})
-            data.push({"data":[{"data":clippedmaxctrl, "metadata":{"viz":"main","name": "clippedmax","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0FE8", "color": getColor(3)}}],loading: false, error: null})
+            data.push({"data":[{"data":clippedareactrl, "metadata":{"viz":"main","displayName": "Clipped min/max","name": "clippedarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0JE8", "color": getColor("clippedArea"), "toolTipColor":chroma(getColor("clippedArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
+            data.push({"data":[{"data":clippedminctrl, "metadata":{"viz":"main","name": "CLIPPEDmin","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0LE8", "color": getColor(3)}}],loading: false, error: null})
+            data.push({"data":[{"data":clippedmaxctrl, "metadata":{"viz":"main","name": "CLIPPEDmax","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0FE8", "color": getColor(3)}}],loading: false, error: null})
         }
         
         if( conf_minmaxareabol === true) {
-            data.push({"data":[{"data":minmaxareactrl, "metadata":{"viz":"main","displayName": "Clipped Max/Min","name": "minmaxarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0FE9", "color": getColor("minmaxArea"), "toolTipColor":chroma(getColor("minmaxArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
+            data.push({"data":[{"data":minmaxareactrl, "metadata":{"viz":"main","displayName": "Historical min/max","name": "minmaxarea","id":"74B5B05EEA583471E03DCBF0123D81CC79CDE0FE9", "color": getColor("minmaxArea"), "toolTipColor":chroma(getColor("minmaxArea")).alpha(1).darken(2).hex()}}],loading: false, error: null})
             data.push({"data":[{"data":minmaxminsctrl, "metadata":{"viz":"main","name": "HISTORICALmin","id":"625D011FAC794651F25160AD89612DFAAE954C0CB", "color":getColor(3)}}],loading: false, error: null})
             data.push({"data":[{"data":minmaxmaxsctrl, "metadata":{"viz":"main","name": "HISTORICALmax","id":"DDB4E3844C923B3F794EC52642E22CBE9FC8D8D31", "color": getColor(3)}}],loading: false, error: null})
         }
@@ -419,7 +419,7 @@ function AlignedTimeseries(props) {
     const [queryResults, setQueryResults] = useState(null);
     const [globalError, setGlobalError] = useState(null);
     const [windowsizeMoment, setWindowsizeMoment] = useState(DefaultWindowSizeMoment.clone());
-
+    
     let timeRangeMoment;
 
 
@@ -523,7 +523,10 @@ function AlignedTimeseries(props) {
     const pickerIsDefault=cplatformstatecontext.timeRange == undefined;
 
     async function  dataLoader() {
+        // clear previous globalerror before reloading the data
+        setGlobalError(undefined)
         console.log("Data loader called");
+
 
         c_accountid = conf_accountId
         let mainquery = conf_query
@@ -697,7 +700,7 @@ function AlignedTimeseries(props) {
                 console.log("Will refresh the data again in ",refreshratems);
                 interval=setInterval(() => {dataLoader();}, refreshratems);
             }
-        return () => {};         //whats this? 
+        // return () => {};         //whats this? 
      },[conf_toggleReload,incomingTimeRange]);
 
     
@@ -771,11 +774,10 @@ function AlignedTimeseries(props) {
                         el[fieldName]=parseFloat(parseFloat(el[fieldName]).toFixed(parseInt(conf_valuerounding)));
                     }
                 })
-
                 if(!["trimmedarea","minmaxarea","clippedarea"].includes(series.data[0].metadata.name)) {
                     exportchartData.push(series.data[0])
                 }
-                if(!["HISTORICALmin","HISTORICALmax","trimmedmin","trimmedmax","HISTORICALavg","trimmedarea","minmaxarea","clippedarea","clippedmin","clippedmax"].includes(series.data[0].metadata.name)) {
+                if(!["HISTORICALmin","HISTORICALmax","TRIMMEDmin","TRIMMEDmax","HISTORICALmean","trimmedarea","minmaxarea","clippedarea","clippedmin","clippedmax"].includes(series.data[0].metadata.name)) {
                     vizchartData.push(series.data[0])
                 }
             }
@@ -783,8 +785,7 @@ function AlignedTimeseries(props) {
 
 
         if( conf_average === true ) {
-            queryResults.forEach(r=>{ if(r.data && r.data[0] && (r.data[0].metadata.name == "HISTORICALavg") ){
-                r.data[0].metadata.name="Historical mean";
+            queryResults.forEach(r=>{ if(r.data && r.data[0] && (r.data[0].metadata.name == "HISTORICALmean") ){
                 linechartdata.push(r.data[0]);
             }})
             
@@ -805,11 +806,9 @@ function AlignedTimeseries(props) {
         }
         }
         
-        if (conf_hideoriginaldata === true ) {
+        if (conf_showoriginaldata === false ) {
             vizchartData=[vizchartData[0]]
-        }
-
-        
+        }      
 
         vizchartData[0].metadata.color=getColor('primary');
 
@@ -826,6 +825,9 @@ function AlignedTimeseries(props) {
             }
             
         })
+
+
+
 
         //Chart configuration options
         let yLabel=null
@@ -928,11 +930,11 @@ function AlignedTimeseries(props) {
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
                 }}
             />
-          <Tooltip labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
+          {/* <Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} /> */}
           <Legend />
           {referenceAreas}
           {referenceLines}
-          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" data={s.data} name={s.metadata.name} key={s.metadata.name}/>))}   
+          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
           {arechartdata.map((s) => (<Area isAnimationActive={false} type="monotone" fill={s.metadata.color} stroke={s.metadata.toolTipColor} dataKey="y" legendType='none' data={s.data}  name={s.metadata.displayName} strokeWidth={0} key={s.metadata.name}/>))}
           {vizchartData.map((s) => {return <Line isAnimationActive={false} type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
           {refPoint}
