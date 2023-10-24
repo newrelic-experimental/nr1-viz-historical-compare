@@ -394,6 +394,12 @@
                     "type": "boolean"
                 },
                 {
+                    "name": "conf_legendbol",
+                    "title": "Display chart legend",
+                    "description": "Display legend",
+                    "type": "boolean"
+                },
+                {
                     "name": "conf_csvbol",
                     "title": "Display CSV download button",
                     "description": "Display CSV download button",

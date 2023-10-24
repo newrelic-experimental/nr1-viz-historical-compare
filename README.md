@@ -93,14 +93,14 @@ These settings control the time window of data to query and display. These can b
 ### Historical lookback
 These settings control how previous windows of data are gathered.
 
-- **Compare periods (number):* Specify how many additional historical previous periods of data to query.   
+- **Compare periods (number):** Specify how many additional historical previous periods of data to query.   
 - **Compare step size (period):** Specify how far apart each period should be. For instance to compare with rolling weeks specify "7D", or for daily comparisons "1D, and hourly "T1H"
 
 
 ### Layer options
 These settings control how sleeved layers and series data are displayed. Only historical periods are included in the calculations.
 
-- **Hide historical:** If this is enabled then the historical periods are queried and used to build the sleeves but their individual series plots are hidden from the chart.
+- **Show historical:** If this is enabled then the historical periods are queried and used to build the sleeves but their individual series plots are hidden from the chart.
 - **Average:** Display a mean average line. 
 - **Min Max Area:** Plot a sleeve that indicates the maximum and minimum of the historical data.
 - **Trimmed Area & Trim Percentage:** Displays a similar sleeve to max/min but allows it to be reduced by a specified percentage.
@@ -126,7 +126,9 @@ These settings control the appearance of the chart.
 - **Y Axis Label:** lets you specify the Y axis label
 - **Y axis max:** Allows you to set the maximum value of the Y axis. Data will be clipped.
 - **Y axis min:** Allows you to set the minimum value of the Y axis. Data will be clipped.
-- **Display grid:** enable the grid display
+- **Display tooltip:** Enable the tooltip display
+- **Display legend:** Enable the legends display
+- **Display grid:** Enable the grid display
 - **Colour theme:** Choose your favourite colour scheme
 - **Alignment:** Controls how data is aligned. (Should be removed!)
 
