@@ -119,6 +119,7 @@ function AlignedTimeseries(props) {
         const conf_datetimestringformat_xaxis = !grp_display ? null : grp_display.conf_datetimestringformat_xaxis == undefined ? null : grp_display.conf_datetimestringformat_xaxis;
         const conf_datetimestringformat_tooltip = !grp_display ? null : grp_display.conf_datetimestringformat_tooltip == undefined ? null : grp_display.conf_datetimestringformat_tooltip;
         const conf_gridbol = !grp_display ? null : grp_display.conf_gridbol == undefined ? false : grp_display.conf_gridbol;
+        const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol;
         const conf_csvbol = !grp_display ? null : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
         
 
@@ -877,6 +878,12 @@ function AlignedTimeseries(props) {
             })
         }
 
+        //tooltip
+        let tooltip=null;
+        if(conf_tooltipbol!==null && conf_tooltipbol===true) {
+            tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
+        }
+
         //grid
         let chartGrid=null;
         if(conf_gridbol!==null && conf_gridbol===true) {
@@ -930,7 +937,7 @@ function AlignedTimeseries(props) {
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
                 }}
             />
-          {/* <Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} /> */}
+          {tooltip}
           <Legend />
           {referenceAreas}
           {referenceLines}

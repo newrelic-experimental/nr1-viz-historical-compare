@@ -388,6 +388,12 @@
                     "type": "boolean"
                 },
                 {
+                    "name": "conf_tooltipbol",
+                    "title": "Display tooltip",
+                    "description": "Display tooltip",
+                    "type": "boolean"
+                },
+                {
                     "name": "conf_csvbol",
                     "title": "Display CSV download button",
                     "description": "Display CSV download button",
