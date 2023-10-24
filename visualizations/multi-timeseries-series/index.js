@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext} from 'react';
 import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine,CustomizedTooltip} from 'recharts';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
@@ -120,6 +120,7 @@ function AlignedTimeseries(props) {
         const conf_datetimestringformat_tooltip = !grp_display ? null : grp_display.conf_datetimestringformat_tooltip == undefined ? null : grp_display.conf_datetimestringformat_tooltip;
         const conf_gridbol = !grp_display ? null : grp_display.conf_gridbol == undefined ? false : grp_display.conf_gridbol;
         const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol;
+        const conf_legendbol = !grp_display ? null : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol;
         const conf_csvbol = !grp_display ? null : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
         
 
@@ -827,14 +828,11 @@ function AlignedTimeseries(props) {
             
         })
 
-
-
-
         //Chart configuration options
         let yLabel=null
-        let LeftMargin = 0
-        if(conf_yaxislabel !== "" & conf_yaxislabel!== null) {
-            LeftMargin = 20
+        let LeftMargin = -20
+        if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
+            LeftMargin = 5
             yLabel = { value: conf_yaxislabel, angle: -90, position: 'insideLeft', style: {fontSize: '0.9rem',fontWeight: 'bold',  fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'}}
         }
 
@@ -879,6 +877,12 @@ function AlignedTimeseries(props) {
         }
 
         //tooltip
+        let legend='none';
+        if(conf_legendbol!==null && conf_legendbol===true) {
+            legend='line' // if we should show legend, use type line wich is recharts default
+        }
+
+        //tooltip
         let tooltip=null;
         if(conf_tooltipbol!==null && conf_tooltipbol===true) {
             tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
@@ -911,9 +915,11 @@ function AlignedTimeseries(props) {
             outTable
         }
 
+        //previous composed chart margins margin={{top: 10, right: 50, bottom: 30, left: LeftMargin}}
         return <AutoSizer>
             {({ width, height }) => (<div id="container" style={{ height: height, width: width}}>
-          <ComposedChart width={width-3} height={height-3} margin={{top: 10, right: 50, bottom: 30, left: LeftMargin}}>
+
+          <ComposedChart width={width-50} height={height-50} margin={{left: LeftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
                 label={xLabel}
@@ -931,19 +937,20 @@ function AlignedTimeseries(props) {
             interval="equidistantPreserveStart" 
             domain={yAxisDomain}
             allowDataOverflow={true} 
-            label={yLabel} 
+            label={yLabel}
             style={{
                     fontSize: '0.8rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
                 }}
             />
           {tooltip}
+          <CartesianGrid horizontal={false} vertical={false} fill="#00000000" />
           <Legend />
           {referenceAreas}
           {referenceLines}
-          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
+          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" legendType={legend} data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
           {arechartdata.map((s) => (<Area isAnimationActive={false} type="monotone" fill={s.metadata.color} stroke={s.metadata.toolTipColor} dataKey="y" legendType='none' data={s.data}  name={s.metadata.displayName} strokeWidth={0} key={s.metadata.name}/>))}
-          {vizchartData.map((s) => {return <Line isAnimationActive={false} type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
+          {vizchartData.map((s) => {return <Line isAnimationActive={false} type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" legendType={legend} data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
           {refPoint}
         </ComposedChart>    
         <div id="CSVloader">{outTable}</div>
