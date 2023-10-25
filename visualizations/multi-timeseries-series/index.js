@@ -830,9 +830,9 @@ function AlignedTimeseries(props) {
 
         //Chart configuration options
         let yLabel=null
-        let LeftMargin = -20
+        let LeftMargin = 0
         if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
-            LeftMargin = 5
+            LeftMargin = 20
             yLabel = { value: conf_yaxislabel, angle: -90, position: 'insideLeft', style: {fontSize: '0.9rem',fontWeight: 'bold',  fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'}}
         }
 
@@ -876,7 +876,7 @@ function AlignedTimeseries(props) {
             })
         }
 
-        //tooltip
+        //legend
         let legend='none';
         if(conf_legendbol!==null && conf_legendbol===true) {
             legend='line' // if we should show legend, use type line wich is recharts default
@@ -917,15 +917,15 @@ function AlignedTimeseries(props) {
 
         //previous composed chart margins margin={{top: 10, right: 50, bottom: 30, left: LeftMargin}}
         return <AutoSizer>
-            {({ width, height }) => (<div id="container" style={{ height: height, width: width}}>
+            {({ width, height }) => (<div id="custviz" style={{ height: height, width: width}}>
 
-          <ComposedChart width={width-50} height={height-50} margin={{left: LeftMargin}}>
+          <ComposedChart width={width-3} height={height-3} margin={{top: 0, right: 0, bottom: 0, left: LeftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
                 label={xLabel}
                 dataKey="x"  
                 type="category" 
-                allowDuplicatedCategory={false} 
+                allowDuplicatedCategory={false}
                 interval="equidistantPreserveStart"  
                 style={{
                     fontSize: '0.8rem',
@@ -934,7 +934,7 @@ function AlignedTimeseries(props) {
           <YAxis 
             dataKey="y" 
             type="number" 
-            interval="equidistantPreserveStart" 
+            interval="preserveStart" 
             domain={yAxisDomain}
             allowDataOverflow={true} 
             label={yLabel}
@@ -944,7 +944,6 @@ function AlignedTimeseries(props) {
                 }}
             />
           {tooltip}
-          <CartesianGrid horizontal={false} vertical={false} fill="#00000000" />
           <Legend />
           {referenceAreas}
           {referenceLines}
