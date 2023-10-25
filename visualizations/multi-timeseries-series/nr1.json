@@ -382,6 +382,30 @@
                     "type": "string"
                 },
                 {
+                    "name": "conf_topmargin",
+                    "title": "Top margin",
+                    "description": "Top margin",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_bottommargin",
+                    "title": "Bottom margin",
+                    "description": "Bottom margin",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_rightmargin",
+                    "title": "Right margin",
+                    "description": "Right margin",
+                    "type": "string"
+                },
+                {
+                    "name": "conf_leftmargin",
+                    "title": "Left margin",
+                    "description": "Left margin",
+                    "type": "string"
+                },
+                {
                     "name": "conf_gridbol",
                     "title": "Display grid",
                     "description": "Display a grid",

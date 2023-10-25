@@ -122,9 +122,11 @@ function AlignedTimeseries(props) {
         const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol;
         const conf_legendbol = !grp_display ? null : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol;
         const conf_csvbol = !grp_display ? null : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
-        
-
- 
+        const conf_topmargin = !grp_display ? null : grp_display.conf_topmargin == undefined ? 0 : grp_display.conf_topmargin;
+        const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : grp_display.conf_bottommargin;
+        const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 : grp_display.conf_rightmargin;
+        const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? -20 : grp_display.conf_leftmargin;
+    
 
     function convertTimestampToDate(timestamp,objname,windowsize) {
         var output
@@ -829,10 +831,31 @@ function AlignedTimeseries(props) {
         })
 
         //Chart configuration options
+
+        let rightMargin = 0
+        if(conf_rightmargin !== "" && conf_rightmargin!== null) {
+            rightMargin = parseInt(conf_rightmargin)
+        }
+
+        let bottomMargin = 0
+        if(conf_bottommargin !== "" && conf_bottommargin!== null) {
+            bottomMargin = parseInt(conf_bottommargin)
+        }
+
+
+        let topMargin = 0
+        if(conf_topmargin !== "" && conf_topmargin!== null) {
+            topMargin = parseInt(conf_topmargin)
+        }
+
+        let leftMargin = -20
+        if(conf_leftmargin !== "" && conf_leftmargin!== null) {
+            leftMargin = parseInt(conf_leftmargin)
+        }
+
         let yLabel=null
-        let LeftMargin = -20
         if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
-            LeftMargin = 5
+            leftMargin = leftMargin + 10
             yLabel = { value: conf_yaxislabel, angle: -90, position: 'insideLeft', style: {fontSize: '0.9rem',fontWeight: 'bold',  fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'}}
         }
 
@@ -914,12 +937,14 @@ function AlignedTimeseries(props) {
         } else {
             outTable
         }
+        function kFormatter(num) {
+            return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+        }
 
-        //previous composed chart margins margin={{top: 10, right: 50, bottom: 30, left: LeftMargin}}
         return <AutoSizer>
             {({ width, height }) => (<div id="container" style={{ height: height, width: width}}>
 
-          <ComposedChart width={width-50} height={height-50} margin={{left: LeftMargin}}>
+          <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
                 label={xLabel}
@@ -932,11 +957,12 @@ function AlignedTimeseries(props) {
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
                 }}/>
           <YAxis 
+            tickFormatter={(y)=>{return kFormatter(y);}} 
             dataKey="y" 
             type="number" 
-            interval="equidistantPreserveStart" 
+            interval="preserveStart" 
             domain={yAxisDomain}
-            allowDataOverflow={true} 
+            allowDataOverflow={true}
             label={yLabel}
             style={{
                     fontSize: '0.8rem',
@@ -944,7 +970,6 @@ function AlignedTimeseries(props) {
                 }}
             />
           {tooltip}
-          <CartesianGrid horizontal={false} vertical={false} fill="#00000000" />
           <Legend />
           {referenceAreas}
           {referenceLines}
