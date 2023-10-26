@@ -6,11 +6,6 @@
     margin-top: 25%;
 }
 
-.container {
-    position: relative;
-}
-
-
 .CSVloader {
    text-align: right;
    margin-right: 2%;
@@ -20,11 +15,7 @@
    left: 70;
 }
 
-// #root,body {
-//     background-color: black;
-//     overflow: auto
-// }
-
-// html[color-scheme='dark'] {
-//     filter: invert(100%);
-// }
+.dark-mode {
+    background-color: #121a1c;
+    filter: invert(1) hue-rotate(-180deg) contrast(1.19)
+}

@@ -126,7 +126,7 @@ function AlignedTimeseries(props) {
         const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : grp_display.conf_bottommargin;
         const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 : grp_display.conf_rightmargin;
         const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? -20 : grp_display.conf_leftmargin;
-    
+        const conf_darkmode = !grp_display ? null : grp_display.conf_darkmode == undefined ? false : grp_display.conf_darkmode;
 
     function convertTimestampToDate(timestamp,objname,windowsize) {
         var output
@@ -941,8 +941,14 @@ function AlignedTimeseries(props) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
 
+        //Color blend for dark-mode
+        let divclassname="light";
+        if(conf_darkmode!==null && conf_darkmode===true) {
+            divclassname = "dark-mode"
+        }
+
         return <AutoSizer>
-            {({ width, height }) => (<div id="container" style={{ height: height, width: width}}>
+            {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
 
           <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}

@@ -412,6 +412,13 @@
                     "type": "boolean"
                 },
                 {
+                    "name": "conf_darkmode",
+                    "title": "Dark mode color blending",
+                    "description": "Blend visualization dark mode colors New Relic main dark mode colors",
+                    "type": "boolean"
+                },
+                
+                {
                     "name": "conf_tooltipbol",
                     "title": "Display tooltip",
                     "description": "Display tooltip",
