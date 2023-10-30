@@ -535,43 +535,6 @@ function AlignedTimeseries(props) {
         };
       };
 
-
-    var rootElement = window.top
-    const shallowCopy1 = { ...rootElement };
-    // frames.parent.parent[0].document.all
-    const result = JSON.stringify(shallowCopy1[0], getCircularReplacer());
-    console.log(result)
-
-    // let rootElement = window.parent.document.getElementById('root');
-    // console.log(rootElement) 
-    
-    // function getParentUrl() {
-    //     var isInIframe = (parent !== window),
-    //         parentUrl = null;
-    
-    //     if (isInIframe) {
-    //         parentUrl = document.referrer;
-    //     }
-
-    //     return parentUrl;
-    // }
-
-    // let rootElement = window.parent;
-    // const shallowCopy1 = { ...rootElement };
-    // // var querydata = _.cloneDeep(rootElement);
-    // // console.log(JSON.stringify(shallowCopy1[0]))
-    // for (let item in shallowCopy1[0]){
-    //     if (item == "parent") {
-    //         console.log(item,shallowCopy1[0][item])
-    //         // for (let subitem in item[0]) {
-    //         //     // console.log(item,shallowCopy1[0][item])
-    //         //     console.log(subitem)
-    //         // }
-    //     }
-        
-    // }
-
-
     const cplatformstatecontext = useContext(PlatformStateContext);
 
     const incomingTimeRange=cplatformstatecontext.timeRange;
