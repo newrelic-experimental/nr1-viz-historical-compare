@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useEffect, useContext} from 'react';
-import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext,NerdletStateContext} from 'nr1';
+import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
