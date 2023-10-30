@@ -93,6 +93,8 @@ function AlignedTimeseries(props) {
         const conf_todaystarttime = !grp_window ? null :grp_window.conf_todaystarttime  == undefined ? null :grp_window.conf_todaystarttime;
         const conf_todayendtime = !grp_window ? null :grp_window.conf_todayendtime == undefined ? null : grp_window.conf_todayendtime;
         const conf_todaystartday = !grp_window ? null :grp_window.conf_todaystartday  == undefined ? null :grp_window.conf_todaystartday;
+        const conf_anchorhour = !grp_window ? null :grp_window.conf_anchorhour  == undefined ? null :grp_window.conf_anchorhour;
+        
 
         //grp_history
         const conf_compare = !grp_history ? null : grp_history.conf_compare == undefined ? null : grp_history.conf_compare;
@@ -131,10 +133,10 @@ function AlignedTimeseries(props) {
     function convertTimestampToDate(timestamp,objname,windowsize) {
         var output
         if (objname == "tooltip"){
-            let formatter= (conf_datetimestringformat_tooltip === null || conf_datetimestringformat_tooltip==="") ? "YYYY/MM/DD hh:mm:ss" : conf_datetimestringformat_tooltip
+            let formatter= (conf_datetimestringformat_tooltip === null || conf_datetimestringformat_tooltip==="") ? "YYYY/MM/DD HH:mm:ss" : conf_datetimestringformat_tooltip
             output = moment.tz(timestamp,conf_timezone).format(formatter);
         } else if (objname == "csv"){
-            let formatter=  "YYYY/MM/DD hh:mm:ss" ;
+            let formatter=  "YYYY/MM/DD HH:mm:ss" ;
             output = moment.tz(timestamp,conf_timezone).format(formatter)
         } else {
             let formatter='YYYY/MM/DD HH:mm'
@@ -521,6 +523,26 @@ function AlignedTimeseries(props) {
         };
     }
 
+
+    //Anchored start/end time allows for avoidance of rolling bucket windows.
+    if(conf_anchorhour!=="" && conf_anchorhour!==null && timeRangeMoment.duration === null) {
+        timeRangeMoment.begin_time.hour(conf_anchorhour);
+        timeRangeMoment.begin_time.minute("00");
+        timeRangeMoment.begin_time.second("00");
+
+        timeRangeMoment.end_time.hour(conf_anchorhour);
+        timeRangeMoment.end_time.minute("00");
+        timeRangeMoment.end_time.second("00");
+        if(!timeRangeMoment.end_time.isAfter(timeRangeMoment.begin_time)) {
+            console.error(`Start/end time was anchored to '${conf_anchorhour}' but the end time wasnt far enough in the future. Check that the end time/duration is large enough for the start and end time to not be equivalent.`)
+            console.log(`Computed start time: ${timeRangeMoment.begin_time.format()}, computed end time: ${timeRangeMoment.end_time.format()}`)
+        } else {
+            console.log(`Anchored start time: ${timeRangeMoment.begin_time.format()}, computed end time: ${timeRangeMoment.end_time.format()}`)
+        }
+    }
+    
+        
+
     const cplatformstatecontext = useContext(PlatformStateContext);
 
     const incomingTimeRange=cplatformstatecontext.timeRange;
@@ -635,7 +657,6 @@ function AlignedTimeseries(props) {
                     nrqlQueries.push({accountId: c_accountid, query: query, color: getColor(i)}) 
                 }                
             }
-
         let promises=nrqlQueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
         let data
     
