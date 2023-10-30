@@ -128,6 +128,11 @@ These settings control the appearance of the chart.
 - **Y axis min:** Allows you to set the minimum value of the Y axis. Data will be clipped.
 - **Display tooltip:** Enable the tooltip display
 - **Display legend:** Enable the legends display
+- **Dark mode color blending:** Blends visualization colors with New Relic colors to be used only when dark mode is in use
+- **Top Margin:** Configure top margin
+- **Bottom Margin:** Configure bottom margin
+- **Right Margin:** Configure right margin
+- **Left Margin:** Configure left margin
 - **Display grid:** Enable the grid display
 - **Colour theme:** Choose your favourite colour scheme
 - **Alignment:** Controls how data is aligned. (Should be removed!)
