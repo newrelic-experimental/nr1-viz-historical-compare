@@ -849,14 +849,14 @@ function AlignedTimeseries(props) {
             topMargin = parseInt(conf_topmargin)
         }
 
-        let leftMargin = -20
+        let leftMargin = 0
         if(conf_leftmargin !== "" && conf_leftmargin!== null) {
             leftMargin = parseInt(conf_leftmargin)
         }
 
         let yLabel=null
         if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
-            leftMargin = leftMargin + 10
+            leftMargin = leftMargin + 20
             yLabel = { value: conf_yaxislabel, angle: -90, position: 'insideLeft', style: {fontSize: '0.9rem',fontWeight: 'bold',  fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'}}
         }
 
