@@ -7,7 +7,7 @@
         "test": "exit 0"
     },
     "nr1": {
-        "uuid": "5b1dc7dc-8c51-4df3-b7b2-6d024075524d"
+        "uuid": "98443ec9-6cee-428a-a301-bd33d40e2820"
     },
     "dependencies": {
         "chroma-js": "^2.4.2",
