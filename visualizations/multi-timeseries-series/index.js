@@ -6,7 +6,6 @@ import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
-import { jsonc } from 'jsonc';
 
 // Global variables
 var _ = require('lodash');
