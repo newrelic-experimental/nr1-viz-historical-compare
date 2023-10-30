@@ -908,7 +908,7 @@ function AlignedTimeseries(props) {
 
         //tooltip
         let tooltip=null;
-        if(conf_tooltipbol!==null && conf_tooltipbol===true) {
+        if(conf_tooltipbol!==null && conf_tooltipbol===false) {
             tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
         }
 
@@ -953,6 +953,14 @@ function AlignedTimeseries(props) {
         function kFormatter(num) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
+        
+
+        //Color blend for dark-mode
+        let divclassname="light";
+        if(conf_darkmode!==null && conf_darkmode===true) {
+            divclassname = "dark-mode"
+        }
+
         
 
         return <AutoSizer>

@@ -410,11 +410,11 @@
                     "title": "Display grid",
                     "description": "Display a grid",
                     "type": "boolean"
-                },
+                },                
                 {
                     "name": "conf_tooltipbol",
-                    "title": "Display tooltip",
-                    "description": "Display tooltip",
+                    "title": "Hide tooltip",
+                    "description": "Hide tooltip",
                     "type": "boolean"
                 },
                 {
@@ -427,6 +427,12 @@
                     "name": "conf_csvbol",
                     "title": "Display CSV download button",
                     "description": "Display CSV download button",
+                    "type": "boolean"
+                },
+                {
+                    "name": "conf_darkmode",
+                    "title": "Dark mode color blending",
+                    "description": "Blend visualization dark mode colors with New Relic window dark mode colors",
                     "type": "boolean"
                 },
                 {
