@@ -88,6 +88,7 @@ These settings control the time window of data to query and display. These can b
 - **Start / End today time (hhmm):** Specify the start and end time as an hour/minute of today. e.g. "0830"
 - **Week from:** Show a full week, starting on the day specified.
 - **Duration (period):** Specify the duration of the data window. Will be relative to any given start/end time provided above. If no start or end time has been provided it will be relative to 'now'.
+- **Anchored start/end hour (hh)**: Specify the hour of day that queries should be anchored to. This is particularly useful if you want to bucket by full clock hour or day as it fixes the the timeseries buckets to start/end at constant point that is not affected by the time the query is run.
 
 
 ### Historical lookback

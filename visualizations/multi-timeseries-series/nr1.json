@@ -189,6 +189,12 @@
                     "type": "string"
                 },
                 {
+                    "name": "conf_anchorhour",
+                    "title": "Anchored start/end hour (hh)",
+                    "description": "Force window start/end to specified hour (00 is start/end of day)",
+                    "type": "string"
+                },
+                {
                     "name": "conf_todaystartday",
                     "title": "Week from",
                     "description": "One week window starting on date",
