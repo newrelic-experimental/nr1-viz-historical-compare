@@ -593,6 +593,13 @@ function AlignedTimeseries(props) {
             let numCompare = (conf_compare !== null && conf_compare !== "") ? parseInt(conf_compare)  : 0        //default to no compare
             let timeseriesOption= (conf_timeseries !== null && conf_timeseries !== "") ? conf_timeseries : "AUTO"  // default to auto timeseries
             
+            if(useSettings!==true) { //if time picker is used then we need to adjust the bucket size otherwise an error is possible
+                if(timeseriesOption=="MAX" || timeseriesOption=="max") {
+                    timeseriesOption="MAX"
+                } else {
+                    timeseriesOption="AUTO"
+                }
+            }
             //moment version
             for (let i = 0; i <= numCompare; i++) {
                 let step = historicalStepSizeMoment.asSeconds() > 0 ? moment.duration(historicalStepSizeMoment.asMilliseconds() * i) : moment.duration(windowsizeMoment*1);
