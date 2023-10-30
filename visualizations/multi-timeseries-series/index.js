@@ -908,14 +908,26 @@ function AlignedTimeseries(props) {
 
         //tooltip
         let tooltip=null;
-        if(conf_tooltipbol!==null && conf_tooltipbol===false) {
+        if(conf_tooltipbol!==null && conf_tooltipbol===true) {
             tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
         }
 
+
+        //Color blend for dark-mode
+        let divclassname="light";
+        let tickColor='#bbb';
+        let gridColor='#ccc';
+        if(conf_darkmode!==null && conf_darkmode===true) {
+            divclassname = "dark-mode"
+            tickColor='#999';
+            gridColor='#666';
+        }
+
+                
         //grid
         let chartGrid=null;
         if(conf_gridbol!==null && conf_gridbol===true) {
-            chartGrid=<CartesianGrid  strokeDasharray="3 3" /> 
+            chartGrid=<CartesianGrid  strokeDasharray="3 3" stroke={gridColor} /> 
         }
 
 
@@ -941,18 +953,10 @@ function AlignedTimeseries(props) {
         function kFormatter(num) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
-
-        //Color blend for dark-mode
-        let divclassname="light";
-        if(conf_darkmode!==null && conf_darkmode===true) {
-            divclassname = "dark-mode"
-        }
-
         
 
         return <AutoSizer>
             {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
-
           <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
@@ -961,6 +965,7 @@ function AlignedTimeseries(props) {
                 type="category" 
                 allowDuplicatedCategory={false} 
                 interval="equidistantPreserveStart"  
+                tick={{stroke: tickColor}}
                 style={{
                     fontSize: '0.8rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
@@ -973,6 +978,7 @@ function AlignedTimeseries(props) {
             domain={yAxisDomain}
             allowDataOverflow={true}
             label={yLabel}
+            tick={{stroke: tickColor}}
             style={{
                     fontSize: '0.8rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
