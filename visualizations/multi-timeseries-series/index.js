@@ -126,7 +126,7 @@ function AlignedTimeseries(props) {
         const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : grp_display.conf_bottommargin;
         const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 : grp_display.conf_rightmargin;
         const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? -20 : grp_display.conf_leftmargin;
-    
+        const conf_darkmode = !grp_display ? null : grp_display.conf_darkmode == undefined ? false : grp_display.conf_darkmode;
 
     function convertTimestampToDate(timestamp,objname,windowsize) {
         var output
@@ -522,6 +522,7 @@ function AlignedTimeseries(props) {
     }
 
     const cplatformstatecontext = useContext(PlatformStateContext);
+
     const incomingTimeRange=cplatformstatecontext.timeRange;
    
     const pickerIsDefault=cplatformstatecontext.timeRange == undefined;
@@ -848,14 +849,14 @@ function AlignedTimeseries(props) {
             topMargin = parseInt(conf_topmargin)
         }
 
-        let leftMargin = -20
+        let leftMargin = 0
         if(conf_leftmargin !== "" && conf_leftmargin!== null) {
             leftMargin = parseInt(conf_leftmargin)
         }
 
         let yLabel=null
         if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
-            leftMargin = leftMargin + 10
+            leftMargin = leftMargin + 20
             yLabel = { value: conf_yaxislabel, angle: -90, position: 'insideLeft', style: {fontSize: '0.9rem',fontWeight: 'bold',  fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'}}
         }
 
@@ -911,10 +912,22 @@ function AlignedTimeseries(props) {
             tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
         }
 
+
+        //Color blend for dark-mode
+        let divclassname="light";
+        let tickColor='#bbb';
+        let gridColor='#ccc';
+        if(conf_darkmode!==null && conf_darkmode===true) {
+            divclassname = "dark-mode"
+            tickColor='#999';
+            gridColor='#666';
+        }
+
+                
         //grid
         let chartGrid=null;
         if(conf_gridbol!==null && conf_gridbol===true) {
-            chartGrid=<CartesianGrid  strokeDasharray="3 3" /> 
+            chartGrid=<CartesianGrid  strokeDasharray="3 3" stroke={gridColor} /> 
         }
 
 
@@ -940,10 +953,10 @@ function AlignedTimeseries(props) {
         function kFormatter(num) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
+        
 
         return <AutoSizer>
-            {({ width, height }) => (<div id="container" style={{ height: height, width: width}}>
-
+            {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
           <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
@@ -952,6 +965,7 @@ function AlignedTimeseries(props) {
                 type="category" 
                 allowDuplicatedCategory={false} 
                 interval="equidistantPreserveStart"  
+                tick={{stroke: tickColor}}
                 style={{
                     fontSize: '0.8rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
@@ -964,6 +978,7 @@ function AlignedTimeseries(props) {
             domain={yAxisDomain}
             allowDataOverflow={true}
             label={yLabel}
+            tick={{stroke: tickColor}}
             style={{
                     fontSize: '0.8rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
