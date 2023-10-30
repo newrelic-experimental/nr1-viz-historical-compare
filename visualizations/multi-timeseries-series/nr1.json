@@ -414,7 +414,7 @@
                 {
                     "name": "conf_darkmode",
                     "title": "Dark mode color blending",
-                    "description": "Blend visualization dark mode colors New Relic main dark mode colors",
+                    "description": "Blend visualization dark mode colors with New Relic window dark mode colors",
                     "type": "boolean"
                 },
                 

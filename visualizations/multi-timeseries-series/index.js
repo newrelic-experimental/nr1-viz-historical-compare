@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useEffect, useContext} from 'react';
-import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
+import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext,NerdletStateContext} from 'nr1';
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
+import { jsonc } from 'jsonc';
 
 // Global variables
 var _ = require('lodash');
@@ -521,7 +522,58 @@ function AlignedTimeseries(props) {
         };
     }
 
+    const getCircularReplacer = () => {
+        const seen = new WeakSet();
+        return (key, value) => {
+          if (typeof value === 'object' && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+
+
+    var rootElement = window.top
+    const shallowCopy1 = { ...rootElement };
+    // frames.parent.parent[0].document.all
+    const result = JSON.stringify(shallowCopy1[0], getCircularReplacer());
+    console.log(result)
+
+    // let rootElement = window.parent.document.getElementById('root');
+    // console.log(rootElement) 
+    
+    // function getParentUrl() {
+    //     var isInIframe = (parent !== window),
+    //         parentUrl = null;
+    
+    //     if (isInIframe) {
+    //         parentUrl = document.referrer;
+    //     }
+
+    //     return parentUrl;
+    // }
+
+    // let rootElement = window.parent;
+    // const shallowCopy1 = { ...rootElement };
+    // // var querydata = _.cloneDeep(rootElement);
+    // // console.log(JSON.stringify(shallowCopy1[0]))
+    // for (let item in shallowCopy1[0]){
+    //     if (item == "parent") {
+    //         console.log(item,shallowCopy1[0][item])
+    //         // for (let subitem in item[0]) {
+    //         //     // console.log(item,shallowCopy1[0][item])
+    //         //     console.log(subitem)
+    //         // }
+    //     }
+        
+    // }
+
+
     const cplatformstatecontext = useContext(PlatformStateContext);
+
     const incomingTimeRange=cplatformstatecontext.timeRange;
    
     const pickerIsDefault=cplatformstatecontext.timeRange == undefined;
@@ -946,6 +998,8 @@ function AlignedTimeseries(props) {
         if(conf_darkmode!==null && conf_darkmode===true) {
             divclassname = "dark-mode"
         }
+
+        
 
         return <AutoSizer>
             {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
