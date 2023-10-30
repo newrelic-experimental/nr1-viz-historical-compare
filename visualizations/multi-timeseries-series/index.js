@@ -908,7 +908,7 @@ function AlignedTimeseries(props) {
 
         //tooltip
         let tooltip=null;
-        if(conf_tooltipbol!==null && conf_tooltipbol===true) {
+        if(conf_tooltipbol!==null && conf_tooltipbol===false) {
             tooltip=<Tooltip  labelFormatter={(value)=>{return convertTimestampToDate(value,'tooltip',windowsizeMoment.asMilliseconds());}} />
         }
 
