@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext} from 'react';
 import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine, Bar} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
@@ -985,7 +985,7 @@ function AlignedTimeseries(props) {
 
         return <AutoSizer>
             {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
-          <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
+          <ComposedChart data={vizchartData[0].data} width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
                 label={xLabel}
@@ -1016,6 +1016,7 @@ function AlignedTimeseries(props) {
           <Legend />
           {referenceAreas}
           {referenceLines}
+          <Bar dataKey="y" fill='#b1f6c6'/>
           {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" legendType={legend} data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
           {arechartdata.map((s) => (<Area isAnimationActive={false} type="monotone" fill={s.metadata.color} stroke={s.metadata.toolTipColor} dataKey="y" legendType='none' data={s.data}  name={s.metadata.displayName} strokeWidth={0} key={s.metadata.name}/>))}
           {vizchartData.map((s) => {return <Line isAnimationActive={false} type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" legendType={legend} data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
