@@ -376,6 +376,12 @@
                     "type": "boolean"
                 },
                 {
+                    "name": "conf_barchart",
+                    "title": "Bar chart",
+                    "description": "Use bar chart for current data series (not historical)",
+                    "type": "boolean"
+                },
+                {
                     "name": "conf_yaxislabel",
                     "title": "Y Axis Label",
                     "description": "Y Axis label",
@@ -446,6 +452,12 @@
                     "title": "Dark mode color blending",
                     "description": "Blend visualization dark mode colors with New Relic window dark mode colors",
                     "type": "boolean"
+                },
+                {
+                    "name": "conf_colorprimary",
+                    "title": "Primary color",
+                    "description": "CSS color for primary, overrides theme color",
+                    "type": "string"
                 },
                 {
                     "name": "conf_colortheme",
