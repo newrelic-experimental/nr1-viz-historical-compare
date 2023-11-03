@@ -646,12 +646,11 @@ function AlignedTimeseries(props) {
                     if(historicalStepSizeMoment.asSeconds() % moment.duration("P1D").asSeconds() !== 0) {
                         console.log("Clock change alignment skipped because historical step size is not a multiple of a day")
                     } else {
-                        //  get hour from current
-                        let currentHour = sinceTimeMoment.hour()
-                        let historicalHour = from.hour()
-                        if(currentHour !== historicalHour) { // if they are the same hour, nothing to do
+                        const dstSinceTimeMoment=moment(sinceTimeMoment.format("YYYY-MM-DD")).isDST();
+                        const dstFrom=moment(from.format("YYYY-MM-DD")).isDST();
+                        if(dstSinceTimeMoment!==dstFrom) { // they are same dst so nothing to do.
                             // calculate the directtion of the difference , careful of midnight wrapping. adjust accordingly
-                            if(historicalHour < currentHour || (historicalHour==23 && currentHour== 0)) {
+                            if(dstSinceTimeMoment === true && dstFrom === false) {
                                 console.log(`Adjusting historical ${i} window +1 hour due to detected clock change`);
                                 from.add(1,'hour');
                                 until.add(1,'hour');
@@ -674,6 +673,8 @@ function AlignedTimeseries(props) {
                     nrqlQueries.push({accountId: c_accountid, query: query, color: getColor(i)}) 
                 }                
             }
+
+            console.log("nrqlQueries",nrqlQueries);
         let promises=nrqlQueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
         let data
     
