@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext} from 'react';
 import {NrqlQuery, Spinner,Button,AutoSizer,PlatformStateContext} from 'nr1';
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine} from 'recharts';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ComposedChart,Area,ReferenceDot, ReferenceArea, ReferenceLine, Bar} from 'recharts';
 import { CSVLink } from "react-csv"
 import moment from 'moment-timezone';
 import chroma from "chroma-js";
@@ -117,18 +117,20 @@ function AlignedTimeseries(props) {
         const conf_yaxislabel = !grp_display ? null : grp_display.conf_yaxislabel == undefined ? null : grp_display.conf_yaxislabel;
         const conf_yaxismax = !grp_display ? null : grp_display.conf_yaxismax == undefined ? null : grp_display.conf_yaxismax;
         const conf_yaxismin = !grp_display ? null : grp_display.conf_yaxismin == undefined ? null : grp_display.conf_yaxismin;
-        const conf_showdots = !grp_display ? null : grp_display.conf_showdots == undefined ? null : grp_display.conf_showdots;
+        const conf_showdots = !grp_display ? null : grp_display.conf_showdots == undefined ? false : grp_display.conf_showdots === null ?  false : grp_display.conf_showdots;
+        const conf_barchart = !grp_display ? null : grp_display.conf_barchart == undefined ? false : grp_display.conf_barchart === null ? false : grp_display.conf_barchart;
+        const conf_colorprimary = !grp_display ? null : grp_display.conf_colorprimary == undefined ? null : grp_display.conf_colorprimary;
         const conf_colortheme = !grp_display ? null : grp_display.conf_colortheme == undefined ? null : grp_display.conf_colortheme;
         const conf_datetimestringformat_xaxis = !grp_display ? null : grp_display.conf_datetimestringformat_xaxis == undefined ? null : grp_display.conf_datetimestringformat_xaxis;
         const conf_datetimestringformat_tooltip = !grp_display ? null : grp_display.conf_datetimestringformat_tooltip == undefined ? null : grp_display.conf_datetimestringformat_tooltip;
         const conf_gridbol = !grp_display ? null : grp_display.conf_gridbol == undefined ? false : grp_display.conf_gridbol;
-        const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol;
-        const conf_legendbol = !grp_display ? null : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol;
+        const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol === null ? false : grp_display.conf_tooltipbol;
+        const conf_legendbol = !grp_display ? null : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol  === null ? false : grp_display.conf_legendbol;
         const conf_csvbol = !grp_display ? null : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
-        const conf_topmargin = !grp_display ? null : grp_display.conf_topmargin == undefined ? 0 : grp_display.conf_topmargin;
-        const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : grp_display.conf_bottommargin;
-        const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 : grp_display.conf_rightmargin;
-        const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? -20 : grp_display.conf_leftmargin;
+        const conf_topmargin = !grp_display ? null : grp_display.conf_topmargin == undefined ? 0 : (grp_display.conf_topmargin === null || grp_display.conf_topmargin === "") ? 0 : grp_display.conf_topmargin ;
+        const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : (grp_display.conf_bottommargin === null || grp_display.conf_bottommargin === "") ? 0 : grp_display.conf_bottommargin ;
+        const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 :(grp_display.conf_rightmargin === null || grp_display.conf_rightmargin === "") ? 0 : grp_display.conf_rightmargin ;
+        const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? 0 : (grp_display.conf_leftmargin === null || grp_display.conf_leftmargin === "") ? 0 : grp_display.conf_leftmargin ;
         const conf_darkmode = !grp_display ? null : grp_display.conf_darkmode == undefined ? false : grp_display.conf_darkmode;
 
     function convertTimestampToDate(timestamp,objname,windowsize) {
@@ -414,13 +416,20 @@ function AlignedTimeseries(props) {
     function getColor(index) {
         let theme = (conf_colortheme !== null && conf_colortheme!=="") ? conf_colortheme:  "pale" ;
         let colorTheme=colorThemes[theme];
+
+
+        if(conf_colorprimary!== "" && conf_colorprimary!== null && index) {
+            return conf_colorprimary;
+        }
+        
         if(colorTheme[index]) {
-            return colorTheme[index]
+            return  colorTheme[index]
         } else {
             let numColors=colorTheme.history.length;
             const chosen =  index % numColors;
             return colorTheme.history[chosen]
         }
+
     }
 
     const [queryResults, setQueryResults] = useState(null);
@@ -674,7 +683,6 @@ function AlignedTimeseries(props) {
                 }                
             }
 
-            console.log("nrqlQueries",nrqlQueries);
         let promises=nrqlQueries.map((q)=>{return NrqlQuery.query({accountIds: [q.accountId], query: q.query,formatTypeenum: NrqlQuery.FORMAT_TYPE.CHART})})
         let data
     
@@ -872,26 +880,11 @@ function AlignedTimeseries(props) {
 
         //Chart configuration options
 
-        let rightMargin = 0
-        if(conf_rightmargin !== "" && conf_rightmargin!== null) {
-            rightMargin = parseInt(conf_rightmargin)
-        }
-
-        let bottomMargin = 0
-        if(conf_bottommargin !== "" && conf_bottommargin!== null) {
-            bottomMargin = parseInt(conf_bottommargin)
-        }
-
-
-        let topMargin = 0
-        if(conf_topmargin !== "" && conf_topmargin!== null) {
-            topMargin = parseInt(conf_topmargin)
-        }
-
-        let leftMargin = 0
-        if(conf_leftmargin !== "" && conf_leftmargin!== null) {
-            leftMargin = parseInt(conf_leftmargin)
-        }
+        let rightMargin =  parseInt(conf_rightmargin);
+        let bottomMargin = parseInt(conf_bottommargin);
+        let topMargin =  parseInt(conf_topmargin);
+        let leftMargin = parseInt(conf_leftmargin);
+        
 
         let yLabel=null
         if(conf_yaxislabel !== "" && conf_yaxislabel!== null) {
@@ -915,7 +908,7 @@ function AlignedTimeseries(props) {
 
         //Reference areas and lines
         let referenceAreas=[], referenceLines=[]
-        if(conf_referenceareas && conf_referenceareas.length > 0) {
+        if(conf_referenceareas !== null && conf_referenceareas.length > 0) {
             conf_referenceareas.forEach((ref)=>{
                 if(ref.conf_refType !== null && ((ref.conf_refY1!==null & ref.conf_refY1!=="") || (ref.conf_refY2!==null & ref.conf_refY2!=="")) ) {
 
@@ -972,7 +965,7 @@ function AlignedTimeseries(props) {
 
         //Line chart options
         let showDots=false;
-        if(conf_showdots!=="" && conf_showdots!==null) {
+        if(conf_showdots === true) {
             showDots = conf_showdots;
         }
 
@@ -993,10 +986,15 @@ function AlignedTimeseries(props) {
             return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
         
-
+        //barchart display
+        let barChart=null;
+        if(conf_barchart === true) {
+            barChart=<Bar dataKey="y" fill={getColor("primary")} isAnimationActive={false} legendType={legend==='line' ? 'rect' : 'none'} name={vizchartData[0].metadata.name} key={vizchartData[0].metadata.name}/>;
+        }
+        console.log(referenceAreas)
         return <AutoSizer>
             {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
-          <ComposedChart width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
+          <ComposedChart data={vizchartData[0].data} width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
           {chartGrid}
           <XAxis tickFormatter={(x)=>{return convertTimestampToDate(x,'xtick',windowsizeMoment.asMilliseconds());}} 
                 label={xLabel}
@@ -1025,11 +1023,13 @@ function AlignedTimeseries(props) {
             />
           {tooltip}
           <Legend />
+          
           {referenceAreas}
           {referenceLines}
-          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" legendType={legend} data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
           {arechartdata.map((s) => (<Area isAnimationActive={false} type="monotone" fill={s.metadata.color} stroke={s.metadata.toolTipColor} dataKey="y" legendType='none' data={s.data}  name={s.metadata.displayName} strokeWidth={0} key={s.metadata.name}/>))}
-          {vizchartData.map((s) => {return <Line isAnimationActive={false} type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" legendType={legend} data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
+          {barChart}
+          {linechartdata.map((s) => (<Line isAnimationActive={false} type="monotone" dot={false} stroke={s.metadata.color} strokeWidth={5} dataKey="y" legendType={legend} data={s.data} name="Historical Mean" key={s.metadata.name}/>))}   
+          {vizchartData.map((s,idx) => {return <Line isAnimationActive={false} hide={ conf_barchart === true && idx==0 ? true: false}type="monotone" dot={showDots} stroke={s.metadata.color} strokeWidth={2} dataKey="y" legendType={legend} data={s.data} name={s.metadata.name} key={s.metadata.name}/>})}
           {refPoint}
         </ComposedChart>    
         <div id="CSVloader">{outTable}</div>
@@ -1038,7 +1038,7 @@ function AlignedTimeseries(props) {
       </AutoSizer>
     } else {
         return <div className="EmptyState">
-                <div className="loader"><Spinner inline/> Loading and aligning data...</div>
+                <div className="loader"><Spinner inline/> Loading data...</div>
             </div>
     }
   }
