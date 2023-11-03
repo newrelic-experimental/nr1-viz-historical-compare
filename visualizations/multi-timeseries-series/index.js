@@ -93,7 +93,8 @@ function AlignedTimeseries(props) {
         const conf_todaystarttime = !grp_window ? null :grp_window.conf_todaystarttime  == undefined ? null :grp_window.conf_todaystarttime;
         const conf_todayendtime = !grp_window ? null :grp_window.conf_todayendtime == undefined ? null : grp_window.conf_todayendtime;
         const conf_todaystartday = !grp_window ? null :grp_window.conf_todaystartday  == undefined ? null :grp_window.conf_todaystartday;
-        const conf_anchorhour = !grp_window ? null :grp_window.conf_anchorhour  == undefined ? null :grp_window.conf_anchorhour;
+        const conf_anchorhour = !grp_window ? null :grp_window.conf_anchorhour  == undefined ? null :grp_window.conf_anchorhour === "" ? null : grp_window.conf_anchorhour;
+        const conf_anchorminute = !grp_window ? null :grp_window.conf_anchorminute  == undefined ? null :grp_window.conf_anchorminute === "" ? null : grp_window.conf_anchorminute;
         
 
         //grp_history
@@ -525,14 +526,23 @@ function AlignedTimeseries(props) {
 
 
     //Anchored start/end time allows for avoidance of rolling bucket windows.
-    if(conf_anchorhour!=="" && conf_anchorhour!==null && timeRangeMoment.duration === null) {
-        timeRangeMoment.begin_time.hour(conf_anchorhour);
-        timeRangeMoment.begin_time.minute("00");
+    if(
+        (conf_anchorhour!==null || conf_anchorminute !== null)
+        && timeRangeMoment.duration === null
+    ) {
+        if(conf_anchorhour!==null) { //if hour is set the set the hour to specified hour and zero out the minutes and seconds
+            timeRangeMoment.begin_time.hour(conf_anchorhour);
+            timeRangeMoment.begin_time.minute("00");
+            timeRangeMoment.end_time.hour(conf_anchorhour);
+            timeRangeMoment.end_time.minute("00");
+        }
+        if(conf_anchorminute!==null){ //if minutes iss set then set the minutes as specified
+            timeRangeMoment.begin_time.minute(conf_anchorminute);
+            timeRangeMoment.end_time.minute(conf_anchorminute);
+        }
         timeRangeMoment.begin_time.second("00");
-
-        timeRangeMoment.end_time.hour(conf_anchorhour);
-        timeRangeMoment.end_time.minute("00");
         timeRangeMoment.end_time.second("00");
+
         if(!timeRangeMoment.end_time.isAfter(timeRangeMoment.begin_time)) {
             console.error(`Start/end time was anchored to '${conf_anchorhour}' but the end time wasnt far enough in the future. Check that the end time/duration is large enough for the start and end time to not be equivalent.`)
             console.log(`Computed start time: ${timeRangeMoment.begin_time.format()}, computed end time: ${timeRangeMoment.end_time.format()}`)

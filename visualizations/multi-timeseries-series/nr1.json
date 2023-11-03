@@ -195,6 +195,12 @@
                     "type": "string"
                 },
                 {
+                    "name": "conf_anchorminute",
+                    "title": "Anchored start/end minute (mm)",
+                    "description": "Force window start/end to specified minute. Can be used with hour above. (00 is start/end of hour)",
+                    "type": "string"
+                },
+                {
                     "name": "conf_todaystartday",
                     "title": "Week from",
                     "description": "One week window starting on date",
