@@ -80,11 +80,11 @@ function AlignedTimeseries(props) {
         const conf_query = !grp_data ? null : grp_data.conf_query  == undefined ? null :grp_data.conf_query;
         const conf_timeseries = !grp_data ? null : grp_data.conf_timeseries  == undefined ? null : grp_data.conf_timeseries;
         const conf_timezone = !grp_data ? null : grp_data.conf_timezone  == undefined ? "UTC" : (grp_data.conf_timezone === null || grp_data.conf_timezone === "") ? "UTC" : grp_data.conf_timezone;
-        const conf_clockchangebol = !grp_data ? null : grp_data.conf_clockchangebol  == undefined ? false : grp_data.conf_clockchangebol;
+        const conf_clockchangebol = !grp_data ? false : grp_data.conf_clockchangebol  == undefined ? false : grp_data.conf_clockchangebol;
         
 
         //grp_window
-        const conf_overridepicker = !grp_window ? null : grp_window.conf_overridepicker  == undefined ? false :grp_window.conf_overridepicker ;
+        const conf_overridepicker = !grp_window ? false : grp_window.conf_overridepicker  == undefined ? false :grp_window.conf_overridepicker ;
         const conf_startunixtime = !grp_window ? null : grp_window.conf_startunixtime  == undefined ? null :grp_window.conf_startunixtime ;
         const conf_endunixtime = !grp_window ? null :grp_window.conf_endunixtime  == undefined ? null :grp_window.conf_endunixtime;
         const conf_duration = !grp_window ? null :grp_window.conf_duration  == undefined ? null :grp_window.conf_duration;
@@ -102,7 +102,7 @@ function AlignedTimeseries(props) {
         const conf_comparestepsize = !grp_history ? null : grp_history.conf_comparestepsize == undefined ? null : grp_history.conf_comparestepsize;
         
         //grp_layers
-        const conf_showoriginaldata = !grp_layers ? null : grp_layers.conf_showoriginaldata == undefined ? null : grp_layers.conf_showoriginaldata;
+        const conf_showoriginaldata = !grp_layers ? false : grp_layers.conf_showoriginaldata == undefined ? false : grp_layers.conf_showoriginaldata === null ? false : grp_layers.conf_showoriginaldata;
         const conf_average = !grp_layers ? null : grp_layers.conf_average == undefined ? null : grp_layers.conf_average;
         const conf_minmaxareabol = !grp_layers ? null : grp_layers.conf_minmaxareabol == undefined ? null : grp_layers.conf_minmaxareabol;
         const conf_trimmedareabol = !grp_layers ? null : grp_layers.conf_trimmedareabol == undefined ? null : grp_layers.conf_trimmedareabol;
@@ -117,21 +117,21 @@ function AlignedTimeseries(props) {
         const conf_yaxislabel = !grp_display ? null : grp_display.conf_yaxislabel == undefined ? null : grp_display.conf_yaxislabel;
         const conf_yaxismax = !grp_display ? null : grp_display.conf_yaxismax == undefined ? null : grp_display.conf_yaxismax;
         const conf_yaxismin = !grp_display ? null : grp_display.conf_yaxismin == undefined ? null : grp_display.conf_yaxismin;
-        const conf_showdots = !grp_display ? null : grp_display.conf_showdots == undefined ? false : grp_display.conf_showdots === null ?  false : grp_display.conf_showdots;
-        const conf_barchart = !grp_display ? null : grp_display.conf_barchart == undefined ? false : grp_display.conf_barchart === null ? false : grp_display.conf_barchart;
+        const conf_showdots = !grp_display ? false : grp_display.conf_showdots == undefined ? false : grp_display.conf_showdots === null ?  false : grp_display.conf_showdots;
+        const conf_barchart = !grp_display ? false : grp_display.conf_barchart == undefined ? false : grp_display.conf_barchart === null ? false : grp_display.conf_barchart;
         const conf_colorprimary = !grp_display ? null : grp_display.conf_colorprimary == undefined ? null : grp_display.conf_colorprimary;
         const conf_colortheme = !grp_display ? null : grp_display.conf_colortheme == undefined ? null : grp_display.conf_colortheme;
         const conf_datetimestringformat_xaxis = !grp_display ? null : grp_display.conf_datetimestringformat_xaxis == undefined ? null : grp_display.conf_datetimestringformat_xaxis;
         const conf_datetimestringformat_tooltip = !grp_display ? null : grp_display.conf_datetimestringformat_tooltip == undefined ? null : grp_display.conf_datetimestringformat_tooltip;
-        const conf_gridbol = !grp_display ? null : grp_display.conf_gridbol == undefined ? false : grp_display.conf_gridbol;
-        const conf_tooltipbol = !grp_display ? null : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol === null ? false : grp_display.conf_tooltipbol;
-        const conf_legendbol = !grp_display ? null : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol  === null ? false : grp_display.conf_legendbol;
-        const conf_csvbol = !grp_display ? null : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
-        const conf_topmargin = !grp_display ? null : grp_display.conf_topmargin == undefined ? 0 : (grp_display.conf_topmargin === null || grp_display.conf_topmargin === "") ? 0 : grp_display.conf_topmargin ;
-        const conf_bottommargin = !grp_display ? null : grp_display.conf_bottommargin == undefined ? 0 : (grp_display.conf_bottommargin === null || grp_display.conf_bottommargin === "") ? 0 : grp_display.conf_bottommargin ;
-        const conf_rightmargin = !grp_display ? null : grp_display.conf_rightmargin == undefined ? 0 :(grp_display.conf_rightmargin === null || grp_display.conf_rightmargin === "") ? 0 : grp_display.conf_rightmargin ;
-        const conf_leftmargin = !grp_display ? null : grp_display.conf_leftmargin == undefined ? 0 : (grp_display.conf_leftmargin === null || grp_display.conf_leftmargin === "") ? 0 : grp_display.conf_leftmargin ;
-        const conf_darkmode = !grp_display ? null : grp_display.conf_darkmode == undefined ? false : grp_display.conf_darkmode;
+        const conf_gridbol = !grp_display ? false : grp_display.conf_gridbol == undefined ? false : grp_display.conf_gridbol;
+        const conf_tooltipbol = !grp_display ? false : grp_display.conf_tooltipbol == undefined ? false : grp_display.conf_tooltipbol === null ? false : grp_display.conf_tooltipbol;
+        const conf_legendbol = !grp_display ? false : grp_display.conf_legendbol == undefined ? false : grp_display.conf_legendbol  === null ? false : grp_display.conf_legendbol;
+        const conf_csvbol = !grp_display ? false : grp_display.conf_csvbol == undefined ? false : grp_display.conf_csvbol;
+        const conf_topmargin = !grp_display ? 0 : grp_display.conf_topmargin == undefined ? 0 : (grp_display.conf_topmargin === null || grp_display.conf_topmargin === "") ? 0 : grp_display.conf_topmargin ;
+        const conf_bottommargin = !grp_display ? 0 : grp_display.conf_bottommargin == undefined ? 0 : (grp_display.conf_bottommargin === null || grp_display.conf_bottommargin === "") ? 0 : grp_display.conf_bottommargin ;
+        const conf_rightmargin = !grp_display ? 0 : grp_display.conf_rightmargin == undefined ? 0 :(grp_display.conf_rightmargin === null || grp_display.conf_rightmargin === "") ? 0 : grp_display.conf_rightmargin ;
+        const conf_leftmargin = !grp_display ? 0 : grp_display.conf_leftmargin == undefined ? 0 : (grp_display.conf_leftmargin === null || grp_display.conf_leftmargin === "") ? 0 : grp_display.conf_leftmargin ;
+        const conf_darkmode = !grp_display ? false : grp_display.conf_darkmode == undefined ? false : grp_display.conf_darkmode;
 
     function convertTimestampToDate(timestamp,objname,windowsize) {
         var output
@@ -387,7 +387,7 @@ function AlignedTimeseries(props) {
         },
         "pinkblack": {
             primary: "#0d66d4",
-            clippedArea: "#22DC6499",
+            clippedArea: "#C573C5cc",
             trimmedArea: "#0262BC66",
             minmaxArea: "#66666666",
             averageLine: '#a6cee3',
@@ -418,7 +418,7 @@ function AlignedTimeseries(props) {
         let colorTheme=colorThemes[theme];
 
 
-        if(conf_colorprimary!== "" && conf_colorprimary!== null && index) {
+        if(conf_colorprimary!== "" && conf_colorprimary!== null && index=="primary") {
             return conf_colorprimary;
         }
         
@@ -858,6 +858,7 @@ function AlignedTimeseries(props) {
         }
         }
         
+    
         if (conf_showoriginaldata === false ) {
             vizchartData=[vizchartData[0]]
         }      
@@ -969,7 +970,7 @@ function AlignedTimeseries(props) {
             showDots = conf_showdots;
         }
 
-        let refPoint= (referencePoint == null) ? null : <ReferenceDot fill={getColor('primary')}  x={vizchartData[0].data[referencePoint].x} y={vizchartData[0].data[referencePoint].y} isFront={true}/>;
+        let refPoint= (referencePoint === null || conf_barchart === true) ? null : <ReferenceDot fill={getColor('primary')}  x={vizchartData[0].data[referencePoint].x} y={vizchartData[0].data[referencePoint].y} isFront={true}/>;
 
         let csvTable= <>
         <CSVLink filename="QueryData.csv" data={exportToCsv(exportchartData)}>CSV</CSVLink>
@@ -1001,7 +1002,7 @@ function AlignedTimeseries(props) {
                 dataKey="x"  
                 type="category" 
                 allowDuplicatedCategory={false} 
-                interval="equidistantPreserveStart"  
+                interval="preserveStart"  
                 tick={{stroke: tickColor}}
                 style={{
                     fontSize: '0.8rem',
