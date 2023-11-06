@@ -908,7 +908,7 @@ function AlignedTimeseries(props) {
 
         //Reference areas and lines
         let referenceAreas=[], referenceLines=[]
-        if(conf_referenceareas !== null && conf_referenceareas.length > 0) {
+        if(conf_referenceareas!== undefined && conf_referenceareas !== null  && conf_referenceareas.length > 0) {
             conf_referenceareas.forEach((ref)=>{
                 if(ref.conf_refType !== null && ((ref.conf_refY1!==null & ref.conf_refY1!=="") || (ref.conf_refY2!==null & ref.conf_refY2!=="")) ) {
 
@@ -991,7 +991,7 @@ function AlignedTimeseries(props) {
         if(conf_barchart === true) {
             barChart=<Bar dataKey="y" fill={getColor("primary")} isAnimationActive={false} legendType={legend==='line' ? 'rect' : 'none'} name={vizchartData[0].metadata.name} key={vizchartData[0].metadata.name}/>;
         }
-        console.log(referenceAreas)
+
         return <AutoSizer>
             {({ width, height }) => (<div class={divclassname} style={{ height: height, width: width}}>
           <ComposedChart data={vizchartData[0].data} width={width-3} height={height-3} margin={{top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin}}>
