@@ -450,7 +450,7 @@
                 {
                     "name": "conf_darkmode",
                     "title": "Dark mode color blending",
-                    "description": "Blend visualization dark mode colors with New Relic window dark mode colors",
+                    "description": "If enabled DARK MODE will be used irrespectively from your choosen New Relic theme, otherwise it will use system settings to blend colors if your New Relic mode is set to AUTO",
                     "type": "boolean"
                 },
                 {
