@@ -946,16 +946,18 @@ function AlignedTimeseries(props) {
         }
 
 
+
+
+
         //Color blend for dark-mode
         let divclassname="light";
         let tickColor='#bbb';
         let gridColor='#ccc';
-        if(conf_darkmode!==null && conf_darkmode===true) {
+        if(conf_darkmode!==null && conf_darkmode===true || window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)  {
             divclassname = "dark-mode"
             tickColor='#999';
             gridColor='#666';
         }
-
                 
         //grid
         let chartGrid=null;
