@@ -37,14 +37,18 @@ function getMinMax(data) {
     let minValue = Infinity;
     let maxValue = -Infinity;
     for (let item of data) {
-        // Find minimum value
-        if (item < minValue)
-            minValue = item;
+        if(item !== null) { //if value is null then we ignore it!
+            // Find minimum value
+            if (item < minValue) {
+                minValue = item;
+            }
 
-        // Find maximum value
-        if (item > maxValue)
-            maxValue = item;                
-    } 
+            // Find maximum value
+            if (item > maxValue) {
+                maxValue = item;  
+            }              
+        }
+    }
     return [minValue,maxValue]
 }
 
@@ -260,6 +264,7 @@ function AlignedTimeseries(props) {
             let maxValue =  minMax[1]
 
             avgarr.push(avgfunction(yvalues))
+
 
             let mins = ((maxValue - minValue)*parseFloat(trimpercent/100))+minValue
             let maxs = maxValue - ((maxValue - minValue)*parseFloat(trimpercent/100))
