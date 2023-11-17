@@ -956,7 +956,7 @@ function AlignedTimeseries(props) {
 
         //Color blend for dark-mode
         let divclassname="light";
-        let tickColor='#bbb';
+        let tickColor='#756b7b';
         let gridColor='#ccc';
         if(conf_darkmode!==null && conf_darkmode===true || window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)  {
             divclassname = "dark-mode"
@@ -1010,11 +1010,12 @@ function AlignedTimeseries(props) {
                 type="category" 
                 allowDuplicatedCategory={false} 
                 interval="preserveStart"  
-                tick={{stroke: tickColor}}
+                tick={{fill: tickColor}}
                 style={{
-                    fontSize: '0.8rem',
+                    fontSize: '0.7rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
-                }}/>
+                }}
+                />
           <YAxis 
             tickFormatter={(y)=>{return kFormatter(y);}} 
             dataKey="y" 
@@ -1023,9 +1024,9 @@ function AlignedTimeseries(props) {
             domain={yAxisDomain}
             allowDataOverflow={true}
             label={yLabel}
-            tick={{stroke: tickColor}}
+            tick={{fill: tickColor}}
             style={{
-                    fontSize: '0.8rem',
+                    fontSize: '0.7rem',
                     fontFamily: '"Inter", "Segoe UI", "Tahoma", sans-serif'
                 }}
             />
@@ -1046,7 +1047,7 @@ function AlignedTimeseries(props) {
       </AutoSizer>
     } else {
         return <div className="EmptyState">
-                <div className="loader"><Spinner inline/> Loading data...</div>
+                <div className="loader"><Spinner inline/>  Loading data...</div>
             </div>
     }
   }
