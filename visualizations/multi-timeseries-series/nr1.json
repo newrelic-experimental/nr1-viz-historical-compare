@@ -2,7 +2,7 @@
     "schemaType": "VISUALIZATION",
     "id": "multi-timeseries-series",
     "displayName": "Historical Period Compare",
-    "description": "Displays timeseries data from different periods on the same chart",
+    "description": "Displays timeseries data overlaid from different periods on the same chart.",
     "configuration": [
         
         {

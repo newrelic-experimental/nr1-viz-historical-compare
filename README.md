@@ -19,6 +19,8 @@ The reference use case is for reviewing order rates across the day. It answers t
 
 ![example1.png](gfx/example1.png)
 ![example2.png](gfx/example2.png)
+![example3.png](gfx/example3.png)
+![example4.png](gfx/example4.png)
 
 ## Installation
 
