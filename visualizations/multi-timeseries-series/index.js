@@ -1008,7 +1008,7 @@ function AlignedTimeseries(props) {
                 label={xLabel}
                 dataKey="x"  
                 type="category" 
-                allowDuplicatedCategory={true} 
+                allowDuplicatedCategory={false} 
                 interval="preserveStart"  
                 tick={{fill: tickColor}}
                 style={{
