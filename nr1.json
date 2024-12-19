@@ -1,6 +1,6 @@
 {
   "schemaType": "NERDPACK",
-  "id": "",
+  "id": "0fd1da71-0261-459f-a016-3e07bdff2406",
   "displayName": "Historical Period Compare",
   "description": "Compares timeseries data from different periods on the same chart"
 }
