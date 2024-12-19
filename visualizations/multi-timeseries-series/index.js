@@ -731,7 +731,7 @@ function AlignedTimeseries(props) {
     }
 
 
-    useEffect(async () => {   
+    useEffect( () => {   
 
         dataLoader()   
 
